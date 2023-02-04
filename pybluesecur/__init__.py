@@ -1,1 +1,1 @@
-from pybluesecur.sign_command import sign_command
+from pybluesecur.pybluesecur import *

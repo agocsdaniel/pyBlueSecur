@@ -1,26 +1,27 @@
 #### These are some findings about the protocol that BlueSecur uses
 
+* This protocol is little-endian.
+
 Receiving challenge
 ```
 Subscribe on BC_RX
-Then you will get something like this
+Then you will get something like this: 837FDCD10EBE5C9604000C00
 
 837FDCD10EBE5C96 - Challenge
-04 00 - signed notification type
-0C 00 - ?
+04 00 - uint16; signed notification type
+0C 00 - uint16; length
 
-In some cases you can get
-
+In some cases you can get more data based on the type
 ```
 
 Sent command structure
 ```
 01 - byte; constant
-3100 - total length: 0x0031 = 48
+31 00 - uint16; total length: 0x0031 = 48
 -- payload
-  0100 - ushort; rootID: 0x0001 = 1
-  1600 - ushort; Command: 0x0016 = 22
-  2E00 - payload length: 0x002e = 46
+  01 00 - uint16; rootID: 0x0001 = 1
+  16 00 - uint16; Command: 0x0016 = 22
+  2E 00 - uint16; payload length: 0x002e = 46
   6FDEDB6300000000 - filler - epoch 0x0000000063dbde6f = 2023.02.01 17:01...
   2B7BB69B49EB9E2EB5140B4D1EE1D4A62DC700215AFC9944ED49DAED8414E8D4 - HMAC SHA256 signature from rootID + challenge
 --
